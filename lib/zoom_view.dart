@@ -164,7 +164,7 @@ class _ZoomViewState extends State<ZoomView> with TickerProviderStateMixin {
   void didUpdateWidget(covariant ZoomView oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if ((oldWidget.resetScale == null || oldWidget.resetScale == false) && widget.resetScale != null && widget.resetScale!) {
+    if (widget.resetScale != null && widget.resetScale!) {
       _updateScale(1);
     }
   }
