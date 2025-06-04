@@ -69,7 +69,6 @@ class ZoomView extends StatefulWidget {
   ///The minimum scale that the ZoomView can be zoomed to. Set to 0 to allow infinite zoom out
   final double minScale;
 
-  ///Reset scale to 1 if true
   final bool? resetScale;
 
   @override
@@ -153,20 +152,20 @@ class _ZoomViewState extends State<ZoomView> with TickerProviderStateMixin {
   ///The focal point of pointers at the start of a scale event
   late Offset _localFocalPoint;
 
-  void _updateScale(double scale) {
-    setState(() {
-      _scale = scale;
-      _lastScale = scale;
-    });
-  }
-
   @override
   void didUpdateWidget(covariant ZoomView oldWidget) {
+    // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
 
     if ((oldWidget.resetScale == null || oldWidget.resetScale == false) && widget.resetScale != null && widget.resetScale!) {
       _updateScale(1);
     }
+  }
+  void _updateScale(double scale) {
+    setState(() {
+      _scale = scale;
+      _lastScale = scale;
+    });
   }
 
   @override
@@ -290,6 +289,7 @@ class _ZoomViewState extends State<ZoomView> with TickerProviderStateMixin {
                       verticalAnimationController: _verticalAnimationController,
                       horizontalAnimationController: _horizontalAnimationController,
                     );
+
                     setState(() {
                       widget.onDoubleTapDown!(zoomViewDetails);
                     });
