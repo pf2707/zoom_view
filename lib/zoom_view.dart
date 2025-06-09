@@ -52,6 +52,7 @@ class ZoomView extends StatefulWidget {
     this.onDoubleTapDown,
     this.scrollAxis = Axis.vertical,
     this.resetScale,
+    this.onZoomChanged,
   });
 
   ///Callback invoked after a double tap down.
@@ -71,6 +72,9 @@ class ZoomView extends StatefulWidget {
 
   ///Reset scale to 1 if true
   final bool? resetScale;
+
+  ///Callback to get current zoom scale
+  final Function(double)? onZoomChanged;
 
   @override
   State<ZoomView> createState() => _ZoomViewState();
@@ -157,6 +161,10 @@ class _ZoomViewState extends State<ZoomView> with TickerProviderStateMixin {
     setState(() {
       _scale = scale;
       _lastScale = scale;
+
+      if (widget.onZoomChanged != null) {
+        widget.onZoomChanged!(_scale);
+      }
     });
   }
 
@@ -230,6 +238,10 @@ class _ZoomViewState extends State<ZoomView> with TickerProviderStateMixin {
                 //This is the main logic to actually perform the scaling
                 setState(() {
                   _scale = newScale;
+
+                  if (widget.onZoomChanged != null) {
+                    widget.onZoomChanged!(_scale);
+                  }
                 });
                 _verticalController.jumpTo(verticalOffset);
                 _horizontalController.jumpTo(horizontalOffset);
