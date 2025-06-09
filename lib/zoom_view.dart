@@ -161,11 +161,11 @@ class _ZoomViewState extends State<ZoomView> with TickerProviderStateMixin {
     setState(() {
       _scale = scale;
       _lastScale = scale;
-
-      if (widget.onZoomChanged != null) {
-        widget.onZoomChanged!(_scale);
-      }
     });
+
+    if (widget.onZoomChanged != null && _scale != 0) {
+      widget.onZoomChanged!(_scale);
+    }
   }
 
   @override
@@ -238,11 +238,12 @@ class _ZoomViewState extends State<ZoomView> with TickerProviderStateMixin {
                 //This is the main logic to actually perform the scaling
                 setState(() {
                   _scale = newScale;
-
-                  if (widget.onZoomChanged != null) {
-                    widget.onZoomChanged!(_scale);
-                  }
                 });
+
+                if (widget.onZoomChanged != null && _scale != 0) {
+                  widget.onZoomChanged!(1 / _scale);
+                }
+
                 _verticalController.jumpTo(verticalOffset);
                 _horizontalController.jumpTo(horizontalOffset);
               } else {
